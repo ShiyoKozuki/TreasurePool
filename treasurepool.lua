@@ -20,10 +20,10 @@ local default_settings = T{
 	font = T{
         visible = true,
         font_family = 'Courier',
-        font_height = 14,
+        font_height = 15,
         color = 0xFFFFFFFF,
-        position_x = 91,
-        position_y = 1429,
+        position_x = 76,
+        position_y = 1361,
 		background = T{
             visible = true,
             color = 0x80000000,
@@ -34,6 +34,13 @@ local default_settings = T{
 local treasurepool = T{
 	settings = settings.load(default_settings)
 };
+
+local UpdateSettings = function()
+    if (treasurepool.font ~= nil) then
+        treasurepool.font:destroy();
+    end
+    treasurepool.font = fonts.new(treasurepool.settings.font);
+end
 
 local function GetTreasureData()
     local outTable = T{};
@@ -50,10 +57,19 @@ end
 
 ashita.events.register('load', 'load_cb', function ()
     treasurepool.font = fonts.new(treasurepool.settings.font);
+    settings.register('settings', 'settingchange', UpdateSettings);
 end);
 
 
 ashita.events.register('d3d_present', 'present_cb', function ()
+
+    local fontObject = treasurepool.font;
+    if (fontObject.position_x ~= treasurepool.settings.font.position_x) or (fontObject.position_y ~= treasurepool.settings.font.position_y) then
+        treasurepool.settings.font.position_x = fontObject.position_x;
+        treasurepool.settings.font.position_y = fontObject.position_y;
+        settings.save()
+    end
+
     local treasurePool = GetTreasureData();
     local treasureText = '';
     local firstLine = true;
@@ -73,14 +89,11 @@ ashita.events.register('d3d_present', 'present_cb', function ()
     end
 
     treasurepool.font.text = treasureText;
-    treasurepool.settings.font.position_x = treasurepool.font:GetPositionX();
-    treasurepool.settings.font.position_y = treasurepool.font:GetPositionY();
 end);
 
 ashita.events.register('unload', 'unload_cb', function ()
     if (treasurepool.font ~= nil) then
         treasurepool.font:destroy();
     end
-settings.save();
 end);
 

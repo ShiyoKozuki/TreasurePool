@@ -22,8 +22,8 @@ local default_settings = T{
         font_family = 'Courier',
         font_height = 14,
         color = 0xFFFFFFFF,
-        position_x = 483,
-        position_y = 804,
+        position_x = 91,
+        position_y = 1429,
 		background = T{
             visible = true,
             color = 0x80000000,
@@ -73,6 +73,8 @@ ashita.events.register('d3d_present', 'present_cb', function ()
     end
 
     treasurepool.font.text = treasureText;
+    treasurepool.settings.font.position_x = treasurepool.font:GetPositionX();
+    treasurepool.settings.font.position_y = treasurepool.font:GetPositionY();
 end);
 
 ashita.events.register('unload', 'unload_cb', function ()

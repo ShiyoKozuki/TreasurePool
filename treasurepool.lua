@@ -7,14 +7,9 @@ addon.link      = 'https://ashitaxi.com/';
 require('common');
 local fonts = require('fonts');
 local settings = require('settings');
-local textDuration = 0
-local tpId
-local tpString
-local monsterId
-local monsterName
-local spellId
 
-local currentPool = {}
+local windowWidth = AshitaCore:GetConfigurationManager():GetFloat('boot', 'ffxi.registry', '0001', 1024);
+local windowHeight = AshitaCore:GetConfigurationManager():GetFloat('boot', 'ffxi.registry', '0002', 768);
 
 local default_settings = T{
 	font = T{
@@ -64,6 +59,12 @@ end);
 ashita.events.register('d3d_present', 'present_cb', function ()
 
     local fontObject = treasurepool.font;
+    if (fontObject.position_x > windowWidth) then
+      fontObject.position_x = 0;
+    end
+    if (fontObject.position_y > windowHeight) then
+      fontObject.position_y = 0;
+    end
     if (fontObject.position_x ~= treasurepool.settings.font.position_x) or (fontObject.position_y ~= treasurepool.settings.font.position_y) then
         treasurepool.settings.font.position_x = fontObject.position_x;
         treasurepool.settings.font.position_y = fontObject.position_y;

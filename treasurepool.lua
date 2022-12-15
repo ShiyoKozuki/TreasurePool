@@ -84,7 +84,12 @@ ashita.events.register('d3d_present', 'present_cb', function ()
         elseif (type(name) ~= 'string') or (string.len(name) < 3) then
             name = 'Unknown';
         end
-        local individualLine = string.format('%-24s %4u:%s', entry.Resource.Name[1], entry.Item.WinningLot, name);
+        local individualLine;
+        if (entry.Item.Lot == 0xFFFF) then
+            individualLine = string.format('|c80000000|%-24s %4u:%s|r', entry.Resource.Name[1], entry.Item.WinningLot, name);
+        else
+            individualLine = string.format('%-24s %4u:%s', entry.Resource.Name[1], entry.Item.WinningLot, name);
+        end
         treasureText = treasureText .. individualLine;
         firstLine = false;
     end

@@ -30,11 +30,11 @@ local treasurepool = T{
 	settings = settings.load(default_settings)
 };
 
-local UpdateSettings = function()
+local UpdateSettings = function(settings)
+    treasurepool.settings = settings;
     if (treasurepool.font ~= nil) then
-        treasurepool.font:destroy();
+        treasurepool.font:apply(treasurepool.settings.font)
     end
-    treasurepool.font = fonts.new(treasurepool.settings.font);
 end
 
 local function GetTreasureData()

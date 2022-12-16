@@ -86,7 +86,7 @@ ashita.events.register('d3d_present', 'present_cb', function ()
         end
         local individualLine;
         if (entry.Item.Lot == 0xFFFF) then
-            individualLine = string.format('|c80000000|%-24s %4u:%s|r', entry.Resource.Name[1], entry.Item.WinningLot, name);
+            individualLine = string.format('|80FFFFFF|%-24s %4u:%s|r', entry.Resource.Name[1], entry.Item.WinningLot, name);
         else
             individualLine = string.format('%-24s %4u:%s', entry.Resource.Name[1], entry.Item.WinningLot, name);
         end

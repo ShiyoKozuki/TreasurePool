@@ -78,7 +78,7 @@ ashita.events.register('d3d_present', 'present_cb', function ()
         if not firstLine then
             treasureText = treasureText .. '\n';
         end
-        local name = AshitaCore:GetMemoryManager():GetEntity():GetName(entry.Item.WinningEntityTargetIndex);
+        local name = entry.Item.WinningEntityName
         if (entry.Item.WinningLot == 0) then
             name = '';
         elseif (type(name) ~= 'string') or (string.len(name) < 3) then
